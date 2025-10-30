@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="pl">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Strona Główna</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body class="bg-light">
+
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-4">
+    <div class="container">
+      <a class="navbar-brand" href="{% url 'home' %}">My site</a>
+      <div>
+        {% if user.is_authenticated %}
+        <span class="text-light me-3">Cześć, {{ user.username }}!</span>
+        <a class="btn btn-outline-light" href="{% url 'logout' %}">Logout</a>
+        {% else %}
+        <a class="btn btn-outline-light me-2" href="{% url 'login' %}">Login</a>
+        <a class="btn btn-light" href="{% url 'register' %}">Register</a>
+        {% endif %}
+
+  </nav>
+
+  <div class="container text-center">
+    <h1 class="mb-4">Welcome on main site !</h1>
+    <p class="text-muted">first version</p>
+  </div>
+  <div class="container my-5">
+    <h2 class="text-center mb-4">Najnowsze ogłoszenia</h2>
+
+    <!-- Flexbox / grid container -->
+    <div class="d-flex flex-wrap justify-content-center gap-4">
+      {% for ad in ads %}
+      <div class="card text-center shadow-sm" style="width: 18rem;">
+        <img src="..." class="card-img-top" alt="...">
+        <div class="card-body">
+          <h5 class="card-title">{{ ad.title }}</h5>
+          <p class="card-text">{{ ad.description }}</p>
+        </div>
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item">
+            {% if ad.price %}
+            <span class="badge text-bg-secondary">{{ ad.price }} zł</span>
+            {% endif %}
+          </li>
+          <li class="list-group-item">{{ ad.location }}</li>
+          <li class="list-group-item">{{ ad.owner.username|default:"Gość" }}</li>
+
+          <li class="list-group-item">
+            {% if ad.contact_email %}
+            Kontakt: {{ ad.contact_email }}
+            {% endif %}
+          </li>
+          <li class="list-group-item">{{ ad.created_at|date:"d.m.Y H:i" }}</li>
+        </ul>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+
+
+
+  <div class="container text-center mt-4">
+    {% if user.is_authenticated %}
+    <a href="{% url 'add_offer' %}" class="btn btn-primary">+ Dodaj ogłoszenie</a>
+    {% endif %}
+  </div>
+
+
+</body>
+
+</html>

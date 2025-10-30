@@ -1,0 +1,53 @@
+<!-- templates/app/add_offer.html -->
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <title>Dodaj ogłoszenie</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+  <div class="container py-4">
+    <h1 class="mb-4">Dodaj ogłoszenie</h1>
+
+    <form method="post" class="card p-3 shadow-sm bg-white">
+      {% csrf_token %}
+
+      <div class="mb-3">
+        <label class="form-label">Tytuł</label>
+        {{ form.title }}
+        <div class="text-danger small">{{ form.title.errors }}</div>
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">Opis</label>
+        {{ form.description }}
+        <div class="text-danger small">{{ form.description.errors }}</div>
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">Cena (opcjonalnie)</label>
+        {{ form.price }}
+        <div class="text-danger small">{{ form.price.errors }}</div>
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">Lokalizacja (opcjonalnie)</label>
+        {{ form.location }}
+        <div class="text-danger small">{{ form.location.errors }}</div>
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">Email kontaktowy (opcjonalnie)</label>
+        {{ form.contact_email }}
+        <div class="text-danger small">{{ form.contact_email.errors }}</div>
+      </div>
+
+      <div class="d-flex gap-2">
+        <button type="submit" class="btn btn-success">Opublikuj</button>
+        <a href="{% url 'home' %}" class="btn btn-outline-secondary">Anuluj</a>
+      </div>
+    </form>
+  </div>
+</body>
+</html>
